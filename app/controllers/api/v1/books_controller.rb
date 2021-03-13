@@ -5,10 +5,11 @@ class Api::V1::BooksController < ApplicationController
 
   def create
     params = book_params
+    
     @author = Author.find_by(name: params[:author_name])
-    if !@author
-      @author = Author.create(name: params[:name])
-    end 
+    unless @author
+      @author =  Author.create(name: params[:name])
+    end
     @book = Book.create(name: params[:name])
     if @book.save
       @book.authors << @author
